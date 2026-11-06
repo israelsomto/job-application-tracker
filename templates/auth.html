@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if mode == "signup" %}Sign up{% else %}Log in{% endif %} | Job Tracker</title>
+  <link rel="stylesheet" href="/static/job.css">
+</head>
+<body class="auth-page">
+  <form method="post" class="auth-card">
+    <h1>Job Application Tracker</h1>
+    <h2>{% if mode == "signup" %}Create your account{% else %}Welcome back{% endif %}</h2>
+
+    {% if error %}
+      <p class="auth-error">{{ error }}</p>
+    {% endif %}
+
+    <input type="text" name="username" placeholder="Username" required minlength="3" autocomplete="username">
+    <input type="password" name="password" placeholder="Password" required minlength="6"
+           autocomplete="{% if mode == 'signup' %}new-password{% else %}current-password{% endif %}">
+
+    <button type="submit">{% if mode == "signup" %}Sign up{% else %}Log in{% endif %}</button>
+
+    <p class="auth-switch">
+      {% if mode == "signup" %}
+        Already have an account? <a href="/login">Log in</a>
+      {% else %}
+        New here? <a href="/signup">Create an account</a>
+      {% endif %}
+    </p>
+  </form>
+</body>
+</html>

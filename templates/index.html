@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Tracker</title>
+  <link rel="stylesheet" href="/static/job.css">
+</head>
+<body>
+  <header>
+    <h1>Job Application Tracker</h1>
+    <div class="header-right">
+      <span class="user-name">{{ username }}</span>
+      <button id="add-btn">+ Add Application</button>
+      <form action="/logout" method="post">
+        <button type="submit" id="logout-btn">Log out</button>
+      </form>
+    </div>
+  </header>
+
+  <div class="filters">
+    <input type="text" id="search" placeholder="Search company or role...">
+    <select id="stage-filter">
+      <option value="all">All stages</option>
+      <option value="wishlist">Wishlist</option>
+      <option value="applied">Applied</option>
+      <option value="interview">Interview</option>
+      <option value="offer">Offer</option>
+      <option value="rejected">Rejected</option>
+    </select>
+  </div>
+
+  <main class="board">
+    <section class="column" id="wishlist">
+      <h2>Wishlist</h2>
+      <div class="cards"></div>
+    </section>
+
+    <section class="column" id="applied">
+      <h2>Applied</h2>
+      <div class="cards"></div>
+    </section>
+
+    <section class="column" id="interview">
+      <h2>Interview</h2>
+      <div class="cards"></div>
+    </section>
+
+    <section class="column" id="offer">
+      <h2>Offer</h2>
+      <div class="cards"></div>
+    </section>
+
+    <section class="column" id="rejected">
+      <h2>Rejected</h2>
+      <div class="cards"></div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden">
+    <form id="job-form" class="modal-content">
+      <h2 id="modal-title">Add Application</h2>
+
+      <input type="text" id="company" placeholder="Company" required>
+      <input type="text" id="role" placeholder="Role" required>
+      <input type="url" id="link" placeholder="Job link (optional)">
+      <input type="date" id="date">
+
+      <select id="status">
+        <option value="wishlist">Wishlist</option>
+        <option value="applied">Applied</option>
+        <option value="interview">Interview</option>
+        <option value="offer">Offer</option>
+        <option value="rejected">Rejected</option>
+      </select>
+
+      <textarea id="notes" placeholder="Notes" rows="3"></textarea>
+
+      <div class="form-buttons">
+        <button type="button" id="cancel-btn">Cancel</button>
+        <button type="submit" id="save-btn">Save</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="/static/job.js"></script>
+</body>
+</html>
