@@ -221,7 +221,48 @@ def delete_job(job_id):
     return jsonify({"deleted": job_id})
 
 
+def seed_demo():
+    """Create a demo account with sample cards if it doesn't exist yet."""
+    with sqlite3.connect(DATABASE) as db:
+        exists = db.execute(
+            "SELECT id FROM users WHERE username = ?", ("demo",)
+        ).fetchone()
+        if exists:
+            return
+
+        cur = db.execute(
+            "INSERT INTO users (username, password_hash) VALUES (?, ?)",
+            ("demo", generate_password_hash("demo1234")),
+        )
+        uid = cur.lastrowid
+
+        samples = [
+            ("Paystack", "Junior Frontend Developer", "", "", "wishlist",
+             "Dream company. Check the careers page weekly"),
+            ("Flutterwave", "Software Engineer Intern", "", "", "wishlist",
+             "Polish my portfolio first"),
+            ("Andela", "Junior Web Developer", "", "2026-11-03", "applied",
+             "Applied on their website, no reply yet"),
+            ("Interswitch", "Graduate Trainee (IT)", "", "2026-11-05", "applied",
+             "Sent CV and cover letter"),
+            ("Kuda", "Frontend Developer", "", "2026-11-06", "applied",
+             "Referred by a friend. Follow up in a week"),
+            ("Moniepoint", "Junior Developer", "", "2026-11-19", "interview",
+             "Technical interview. Revise JavaScript and the DOM"),
+            ("Remote Startup", "Junior Full-Stack Developer", "", "2026-11-28", "offer",
+             "Offer received. Negotiate and reply by Friday"),
+            ("Jumia", "Web Developer", "", "2026-10-30", "rejected",
+             "Rejected. Ask for feedback"),
+        ]
+        db.executemany(
+            "INSERT INTO jobs (user_id, company, role, link, date, status, notes) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            [(uid, *s) for s in samples],
+        )
+
+
 init_db()
+seed_demo()
 
 if __name__ == "__main__":
     app.run(debug=os.environ.get("FLASK_DEBUG") == "1")
