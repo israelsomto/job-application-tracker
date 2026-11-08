@@ -51,3 +51,4 @@ Then open http://127.0.0.1:5000
 - Stats page (applications per week, response rate)
 - CSV export and follow-up reminders
 - Split the front end onto Netlify with the API on Render
+   **Try it:** log in with username `demo` and password `demo1234`, or create your own account.
